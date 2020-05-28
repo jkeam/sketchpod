@@ -8,9 +8,9 @@
     "npm": ">= 6.14.4"
   },
   "dependencies": {
-    "config-multipaas": "^0.2.2",
-    "express": "^4.13.4",
-    "patternfly": "^3.4.0",
+    "config-multipaas": "^0.2.3",
+    "express": "^4.17.1",
+    "patternfly": "^3.59.5",
     "request": "^2.72.0"
   },
   "repository": {
@@ -18,7 +18,7 @@
     "url": "https://github.com/ryanj/sketchpod.git"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node ./server.js"
   },
   "license": "MIT",
   "main": "server.js"
