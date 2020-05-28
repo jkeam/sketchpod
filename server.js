@@ -28,8 +28,7 @@ var receiveImage = function(req, res, next) {
     next(err);
   });
   req.on('end', function() {
-    var filename = os.tmpdir() + '/sketch.png';
-    fs.open(filename, 'w', function(err, fd) {
+    fs.open(`${os.tmpdir()}/sketch.png`, 'w', function(err, fd) {
       if (err) {
         next(err);
       };
