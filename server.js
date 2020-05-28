@@ -1,25 +1,24 @@
 'use strict';
 
-var cc       = require('config-multipaas')
-  , express = require('express')
-  , app = express()
-  , path = require('path')
-  , router = express.Router()
-  , http = require('http')
-  , os       = require('os')
-  , fs = require('fs')
+const cc = require('config-multipaas');
+const express = require('express');
+const app = express();
+const path = require('path');
+const router = express.Router();
+const http = require('http');
+const os = require('os');
+const fs = require('fs');
+const config = cc();
 
-var config = cc();
-
-var sketch = {
-  cuid : process.env.CUID || 'unknown client id',
-  username : process.env.USERNAME || 'unclaimed',
-  submission : process.env.SUBMISSION || 'no doodle'
+const sketch = {
+  cuid: process.env.CUID || 'unknown client id',
+  username: process.env.USERNAME || 'unclaimed',
+  submission: process.env.SUBMISSION || 'no doodle'
 };
 
-var index = fs.readFileSync(__dirname + '/static/index.html');
+const index = fs.readFileSync(__dirname + '/static/index.html');
 
-var receiveImage = function(req, res, next) {
+const receiveImage = function(req, res, next) {
   var data = new Buffer('');
   req.on('data', function(chunk) {
     data = Buffer.concat([data, chunk]);
@@ -55,7 +54,7 @@ app.post('/doodle/', receiveImage);
 app.head('/status', function (req, res, next) { res.send(); });
 app.get('/status', function (req, res, next) { res.send("{status: 'ok'}"); });
 app.get('/', function (req, res, next) {
-  console.log("username:" + sketch.username);
+  console.log('username:' + sketch.username);
   var html  = index.toString()
              .replace( /\{\{SUBMISSION\}\}/, sketch.submission)
              .replace( /\{\{USERNAME\}\}/, sketch.username)
@@ -65,7 +64,7 @@ app.get('/', function (req, res, next) {
 app.get('/sketch.png', function (req, res, next) {
   fs.stat(os.tmpdir() + '/sketch.png', function(err){
     if(err){
-      res.status(404).send("404 (Not Found)");
+      res.status(404).send('404 (Not Found)');
     }else{
       fs.createReadStream(os.tmpdir() + '/sketch.png').pipe(res);
     }
