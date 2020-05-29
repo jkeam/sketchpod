@@ -5884,3 +5884,7 @@ body {
   border-radius: 1px;
   width: 100%;
 }
+#save-canvas {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+}
