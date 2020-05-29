@@ -37,7 +37,7 @@
         plots = [];
     };
 
-    const url = document.getElementById('url').value;
+    const url = encodeURI(document.getElementById('url').value);
     const saveButton = document.getElementById('save-btn');
     const clearButton = document.getElementById('clear-btn');
     const drawButton = document.getElementById('draw-btn');
@@ -53,11 +53,9 @@
     canvas.addEventListener('mouseup', endDraw, false);
 
     saveButton.addEventListener('click', () => {
-        const dataURL = canvas.toDataURL();
-        const body = dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
         fetch(url, {
             method: 'POST',
-            body
+            body: canvas.toDataURL()
         });
     });
     clearButton.addEventListener('click', () => {
