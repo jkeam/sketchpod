@@ -37,8 +37,10 @@
         plots = [];
     };
 
-    const saveButton = document.getElementById('save-canvas');
-    const clearButton = document.getElementById('clear-canvas');
+    const saveButton = document.getElementById('save-btn');
+    const clearButton = document.getElementById('clear-btn');
+    const drawButton = document.getElementById('draw-btn');
+    const eraseButton = document.getElementById('erase-btn');
     const colorPicker = document.getElementById('color-picker');
     const strokePicker = document.getElementById('stroke-picker');
     const canvas = document.getElementById('canvas');
@@ -63,4 +65,15 @@
     strokePicker.addEventListener('input', (e) => {
         ctx.lineWidth = e.target.value;
     }, false);
+
+    drawButton.addEventListener('click', () => {
+        ctx.globalCompositeOperation = 'source-over';
+        drawButton.classList.add('active');
+        eraseButton.classList.remove('active');
+    });
+    eraseButton.addEventListener('click', () => {
+        ctx.globalCompositeOperation = 'destination-out';
+        drawButton.classList.remove('active');
+        eraseButton.classList.add('active');
+    });
 })();
