@@ -37,7 +37,14 @@
         plots = [];
     };
 
+    const clearCanvas = (canvas, ctx) => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
     const url = encodeURI(document.getElementById('url').value);
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+
     const saveButton = document.getElementById('save-btn');
     const clearButton = document.getElementById('clear-btn');
     const drawButton = document.getElementById('draw-btn');
@@ -56,10 +63,19 @@
         fetch(url, {
             method: 'POST',
             body: canvas.toDataURL()
+        }).then((res) => {
+            if (res.ok) {
+                errorMessage.innerHTML = '';
+                successMessage.innerHTML = 'Success!';
+                clearCanvas(canvas, ctx);
+            } else {
+                errorMessage.innerHTML = 'Oh no! Unknown failure.';
+                successMessage.innerHTML = '';
+            }
         });
     });
     clearButton.addEventListener('click', () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        clearCanvas(canvas, ctx);
     });
 
     colorPicker.addEventListener('change', (e) => {
