@@ -1,4 +1,4 @@
-(function () {
+(() => {
     // create a flag
     let isActive = false;
 
@@ -9,11 +9,10 @@
         if(!isActive) return;
 
         // cross-browser canvas coordinates
-        var x = e.offsetX || e.layerX - canvas.offsetLeft;
-        var y = e.offsetY || e.layerY - canvas.offsetTop;
+        const x = e.offsetX || e.layerX - canvas.offsetLeft;
+        const y = e.offsetY || e.layerY - canvas.offsetTop;
 
-        plots.push({x: x, y: y});
-
+        plots.push({x, y});
         drawOnCanvas(plots);
     };
 
@@ -21,8 +20,8 @@
         ctx.beginPath();
         ctx.moveTo(plots[0].x, plots[0].y);
     
-        for(var i=1; i<plots.length; i++) {
-        ctx.lineTo(plots[i].x, plots[i].y);
+        for(let i=1; i<plots.length; i++) {
+            ctx.lineTo(plots[i].x, plots[i].y);
         }
         ctx.stroke();
     };
@@ -39,7 +38,10 @@
     };
 
     const saveButton = document.getElementById('save-canvas');
-    const canvas = document.getElementById('drawCanvas');
+    const clearButton = document.getElementById('clear-canvas');
+    const colorPicker = document.getElementById('color-picker');
+    const strokePicker = document.getElementById('stroke-picker');
+    const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     ctx.lineWidth = '3';
 
@@ -51,4 +53,14 @@
         const dataURL = canvas.toDataURL();
         console.log(dataURL);
     });
+    clearButton.addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    colorPicker.addEventListener('change', (e) => {
+        ctx.strokeStyle = e.target.value;
+    }, false);
+    strokePicker.addEventListener('input', (e) => {
+        ctx.lineWidth = e.target.value;
+    }, false);
 })();
