@@ -37,6 +37,7 @@
         plots = [];
     };
 
+    const url = document.getElementById('url').value;
     const saveButton = document.getElementById('save-btn');
     const clearButton = document.getElementById('clear-btn');
     const drawButton = document.getElementById('draw-btn');
@@ -53,7 +54,11 @@
 
     saveButton.addEventListener('click', () => {
         const dataURL = canvas.toDataURL();
-        console.log(dataURL);
+        const body = dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
+        fetch(url, {
+            method: 'POST',
+            body
+        });
     });
     clearButton.addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
